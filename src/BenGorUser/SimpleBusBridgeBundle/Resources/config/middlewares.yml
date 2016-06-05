@@ -7,11 +7,11 @@
 # file that was distributed with this source code.
 
 services:
-    bengor_user.simple_bus.finishes_command_before_handling_next_middleware:
+    bengor_user.simple_bus_bridge_bundle.finishes_command_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
         public: false
 
-    bengor_user.simple_bus.doctrine_transactional_middleware:
+    bengor_user.simple_bus_bridge_bundle.doctrine_transactional_middleware:
         class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
         public: false
         arguments:

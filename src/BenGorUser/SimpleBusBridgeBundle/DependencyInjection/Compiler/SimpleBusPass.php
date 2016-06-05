@@ -87,7 +87,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares callable resolver for the current user type's command bus
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_command_bus.callable_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.callable_resolver',
             (new Definition(
                 ServiceLocatorAwareCallableResolver::class, [
                     [
@@ -99,7 +99,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares class based command name resolver for the current user type's command bus
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_command_bus.class_based_command_name_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.class_based_command_name_resolver',
             (new Definition(
                 ClassBasedNameResolver::class
             ))->setPublic(false)
@@ -108,11 +108,13 @@ class SimpleBusPass implements CompilerPassInterface
         // Declares the handler map for the current user type's command bus,
         // will contain the association between commands an handlers
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_command_bus.command_handler_map',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.command_handler_map',
             (new Definition(
                 CallableMap::class, [
                     [],
-                    $container->getDefinition('bengor_user.simple_bus.' . $user . '_command_bus.callable_resolver'),
+                    $container->getDefinition(
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.callable_resolver'
+                    ),
                 ]
             ))->setPublic(false)
         );
@@ -120,14 +122,14 @@ class SimpleBusPass implements CompilerPassInterface
         // Declares the handler resolver with the NameResolver
         // strategy and HandlerMap key values for Command => Handler
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_command_bus.command_handler_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.command_handler_resolver',
             (new Definition(
                 NameBasedMessageHandlerResolver::class, [
                     $container->getDefinition(
-                        'bengor_user.simple_bus.' . $user . '_command_bus.class_based_command_name_resolver'
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.class_based_command_name_resolver'
                     ),
                     $container->getDefinition(
-                        'bengor_user.simple_bus.' . $user . '_command_bus.command_handler_map'
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.command_handler_map'
                     ),
                 ]
             ))->setPublic(false)
@@ -135,15 +137,19 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares the Handler
         $container
-            ->findDefinition('bengor_user.simple_bus.' . $user . '_command_bus.delegates_to_message_handler_middleware')
+            ->findDefinition(
+                'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.delegates_to_message_handler_middleware'
+            )
             ->addArgument(
-                $container->getDefinition('bengor_user.simple_bus.' . $user . '_command_bus.command_handler_resolver')
+                $container->getDefinition(
+                    'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.command_handler_resolver'
+                )
             )->setPublic(false);
 
         // Declares the tag that will be used to associate the
         // handlers to the current user type's command bus
         (new RegisterHandlers(
-            'bengor_user.simple_bus.' . $user . '_command_bus.command_handler_map',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.command_handler_map',
             $handlerTag,
             'handles'
         ))->process($container);
@@ -190,7 +196,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares callable resolver for the current user type's event bus
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_event_bus.callable_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.callable_resolver',
             (new Definition(
                 ServiceLocatorAwareCallableResolver::class, [
                     [
@@ -202,7 +208,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares class based event name resolver for the current user type's event bus
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_event_bus.class_based_event_name_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.class_based_event_name_resolver',
             (new Definition(
                 ClassBasedNameResolver::class
             ))->setPublic(false)
@@ -211,11 +217,13 @@ class SimpleBusPass implements CompilerPassInterface
         // Declares the event subscribers collection for the current user type's event bus,
         // will contain the association between events an subscribers
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_event_bus.event_subscribers_collection',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.event_subscribers_collection',
             (new Definition(
                 CallableCollection::class, [
                     [],
-                    $container->getDefinition('bengor_user.simple_bus.' . $user . '_event_bus.callable_resolver'),
+                    $container->getDefinition(
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.callable_resolver'
+                    ),
                 ]
             ))->setPublic(false)
         );
@@ -223,14 +231,14 @@ class SimpleBusPass implements CompilerPassInterface
         // Declares the subscriber resolver with the NameResolver
         // strategy and SubscriberCollection key values for Event => Subscriber
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_event_bus.event_subscribers_resolver',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.event_subscribers_resolver',
             (new Definition(
                 NameBasedMessageSubscriberResolver::class, [
                     $container->getDefinition(
-                        'bengor_user.simple_bus.' . $user . '_event_bus.class_based_event_name_resolver'
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.class_based_event_name_resolver'
                     ),
                     $container->getDefinition(
-                        'bengor_user.simple_bus.' . $user . '_event_bus.event_subscribers_collection'
+                        'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.event_subscribers_collection'
                     ),
                 ]
             ))->setPublic(false)
@@ -238,15 +246,19 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Declares the Subscriber
         $container
-            ->findDefinition('bengor_user.simple_bus.' . $user . '_event_bus.delegates_to_message_handler_middleware')
+            ->findDefinition(
+                'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.delegates_to_message_handler_middleware'
+            )
             ->addArgument(
-                $container->getDefinition('bengor_user.simple_bus.' . $user . '_event_bus.event_subscribers_resolver')
+                $container->getDefinition(
+                    'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.event_subscribers_resolver'
+                )
             )->setPublic(false);
 
         // Declares the tag that will be used to associate the
         // subscribers to the current user type's event bus
         (new RegisterSubscribers(
-            'bengor_user.simple_bus.' . $user . '_event_bus.event_subscribers_collection',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.event_subscribers_collection',
             $subscriberTag,
             'subscribes_to'
         ))->process($container);
@@ -263,7 +275,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // All about aggregate recorded message
         $container->setDefinition(
-            'bengor_user.simple_bus.' . $user . '_event_bus.aggregates_recorded_messages',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.aggregates_recorded_messages',
             new Definition(
                 AggregatesRecordedMessages::class, [
                     [],
@@ -271,22 +283,24 @@ class SimpleBusPass implements CompilerPassInterface
             )
         )->setPublic(false);
         $container
-            ->findDefinition('bengor_user.simple_bus.' . $user . '_event_bus.handles_recorded_messages_middleware')
+            ->findDefinition(
+                'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.handles_recorded_messages_middleware'
+            )
             ->setArguments([
                 $container->getDefinition(
-                    'bengor_user.simple_bus.' . $user . '_event_bus.aggregates_recorded_messages'
+                    'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.aggregates_recorded_messages'
                 ),
                 $container->getDefinition($busId),
             ])->setPublic(false);
         (new RegisterMessageRecorders(
-            'bengor_user.simple_bus.' . $user . '_event_bus.aggregates_recorded_messages',
+            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.aggregates_recorded_messages',
             'event_recorder'
         ))->process($container);
 
         CompilerPassUtil::prependBeforeOptimizationPass(
             $container,
             new AddMiddlewareTags(
-                'bengor_user.simple_bus.' . $user . '_event_bus.handles_recorded_messages_middleware',
+                'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.handles_recorded_messages_middleware',
                 ['command'],
                 200
             )

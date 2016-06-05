@@ -7,8 +7,8 @@
 # file that was distributed with this source code.
 
 services:
-    bengor_user.simple_bus.doctrine_orm_bridge.collects_events_from_entities:
-        class: BenGorUser\UserBundle\EventListener\CollectsEventsFromEntities
+    bengor_user.simple_bus_bridge_bundle.collects_events_from_entities:
+        class: BenGorUser\SimpleBusBridgeBundle\EventListener\CollectsEventsFromEntities
         public: false
         tags:
             - { name: event_recorder }
