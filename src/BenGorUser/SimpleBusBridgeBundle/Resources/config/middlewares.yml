@@ -1,0 +1,19 @@
+# This file is part of the BenGorUser package.
+#
+# (c) Beñat Espiña <benatespina@gmail.com>
+# (c) Gorka Laucirica <gorka.lauzirika@gmail.com>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+
+services:
+    bengor_user.simple_bus.finishes_command_before_handling_next_middleware:
+        class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
+        public: false
+
+    bengor_user.simple_bus.doctrine_transactional_middleware:
+        class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
+        public: false
+        arguments:
+            - '@doctrine'
+            - 'default'
