@@ -12,9 +12,9 @@
 
 namespace BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler;
 
-use BenGorUser\SimpleBusBridgeBundle\CommandBus\SimpleBusUserCommandBus;
+use BenGorUser\SimpleBusBridge\CommandBus\SimpleBusUserCommandBus;
 use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusBridgeExtension;
-use BenGorUser\SimpleBusBridgeBundle\EventBus\SimpleBusUserEventBus;
+use BenGorUser\SimpleBusBridge\EventBus\SimpleBusUserEventBus;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use SimpleBus\Message\CallableResolver\CallableCollection;
 use SimpleBus\Message\CallableResolver\CallableMap;

@@ -19,10 +19,9 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "bengor-user/user-bundle": "0.6.x-dev",
+        "bengor-user/simple-bus-bridge": "1.0.x-dev",
         "simple-bus/doctrine-orm-bridge": "^4.0",
-        "simple-bus/message-bus": "^2.2",
         "simple-bus/symfony-bridge": "^4.0"
-
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^1.11",
@@ -45,5 +44,7 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
