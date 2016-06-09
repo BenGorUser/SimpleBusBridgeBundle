@@ -4,11 +4,12 @@
 [![Build Status](https://travis-ci.org/BenGorUser/SimpleBusBridgeBundle.svg?branch=master)](https://travis-ci.org/BenGorUser/SimpleBusBridgeBundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BenGorUser/SimpleBusBridgeBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/BenGorUser/SimpleBusBridgeBundle/?branch=master)
 [![Total Downloads](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle/downloads)](https://packagist.org/packages/bengor-user/simple-bus-bridge-bundle/)
-[![Latest Stable Version](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle//v/stable.svg)](https://packagist.org/packages/bengor-user/simple-bus-bridge-bundle/)
-[![Latest Unstable Version](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle//v/unstable.svg)](https://packagist.org/packages/bengor-user/simple-bus-bridge-bundle/)
+[![Latest Stable Version](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle/v/stable.svg)](https://packagist.org/packages/bengor-user/simple-bus-bridge-bundle/)
+[![Latest Unstable Version](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle/v/unstable.svg)](https://packagist.org/packages/bengor-user/simple-bus-bridge-bundle/)
 
 ##Requirements
-PHP >= 5.5
+PHP >= 5.5</br>
+Symfony >= 2.8 
 
 ##Installation
 The easiest way to install this component is using [Composer][6]
@@ -17,12 +18,10 @@ $ composer require bengor-user/simple-bus-bridge-bundle
 ```
 
 ##Documentation
-All the documentation is stored in the `docs` folder.
-
-[Show me the docs!](docs/index.md)
+All the documentation is stored inside the [user bundle](https://github.com/BenGorUser/UserBundle/blob/master/docs/index.md).
 
 ##Tests
-This library is completely tested by **[PHPSpec][1], SpecBDD framework for PHP**.
+This bundle is completely tested by **[PHPSpec][1], SpecBDD framework for PHP**.
 
 Run the following command to launch tests:
 ```bash
@@ -52,7 +51,7 @@ This bundle is created by:
 **@gorkalaucirica** - [gorka.lauzirika@gmail.com](mailto:gorka.lauzirika@gmail.com)
 
 ##Licensing Options
-[![License](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle//license.svg)](https://github.com/BenGorUser/SimpleBusBridgeBundle/blob/master/LICENSE)
+[![License](https://poser.pugx.org/bengor-user/simple-bus-bridge-bundle/license.svg)](https://github.com/BenGorUser/SimpleBusBridgeBundle/blob/master/LICENSE)
 
 [1]: http://www.phpspec.net/
 [2]: http://symfony.com/doc/current/contributing/code/index.html

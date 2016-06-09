@@ -13,8 +13,8 @@
 namespace BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler;
 
 use BenGorUser\SimpleBusBridge\CommandBus\SimpleBusUserCommandBus;
-use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusBridgeExtension;
 use BenGorUser\SimpleBusBridge\EventBus\SimpleBusUserEventBus;
+use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusBridgeExtension;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use SimpleBus\Message\CallableResolver\CallableCollection;
 use SimpleBus\Message\CallableResolver\CallableMap;
@@ -156,7 +156,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Decorate SimpleBus' command bus with BenGorUser's command bus
         $container->setDefinition(
-            'bengor_user.' . $user . '_command_bus',
+            'bengor_user.' . $user . '.command_bus',
             new Definition(
                 SimpleBusUserCommandBus::class, [
                     $container->getDefinition($busId),
@@ -265,7 +265,7 @@ class SimpleBusPass implements CompilerPassInterface
 
         // Decorate SimpleBus' event bus with BenGorUser's event bus
         $container->setDefinition(
-            'bengor_user.' . $user . '_event_bus',
+            'bengor_user.' . $user . '.event_bus',
             new Definition(
                 SimpleBusUserEventBus::class, [
                     $container->getDefinition($busId),
