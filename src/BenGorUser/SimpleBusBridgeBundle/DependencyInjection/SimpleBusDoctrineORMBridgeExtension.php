@@ -24,11 +24,11 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Simple bus bridge bundle extension class.
+ * Simple bus and Doctrine ORM bridge bundle extension class.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class SimpleBusBridgeExtension extends Extension implements PrependExtensionInterface, SimpleBusTaggerExtension
+class SimpleBusDoctrineORMBridgeExtension extends Extension implements PrependExtensionInterface, SimpleBusTaggerExtension
 {
     /**
      * {@inheritdoc}
@@ -37,7 +37,7 @@ class SimpleBusBridgeExtension extends Extension implements PrependExtensionInte
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
-        $loader->load('middlewares.yml');
+        $loader->load('doctrine_orm.yml');
     }
 
     /**
@@ -57,35 +57,10 @@ class SimpleBusBridgeExtension extends Extension implements PrependExtensionInte
      */
     public function addMiddlewareTags(ContainerBuilder $container, $user)
     {
-        // Related with Command Bus
-        $container->setDefinition(
-            'bengor_user.simple_bus_bridge_bundle.' . $user . '_command_bus.delegates_to_message_handler_middleware',
-            (new Definition(DelegatesToMessageHandlerMiddleware::class))->addTag(
-                'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '-1000']
-            )
-        );
         $container->getDefinition(
-            'bengor_user.simple_bus_bridge_bundle.finishes_command_before_handling_next_middleware'
+            'bengor_user.simple_bus_bridge_bundle.doctrine_orm_transactional_middleware'
         )->addTag(
-            'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '1000']
-        );
-
-        // Related with Event Bus
-        $container->setDefinition(
-            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.delegates_to_message_handler_middleware',
-            (new Definition(NotifiesMessageSubscribersMiddleware::class))->addTag(
-                'bengor_user_' . $user . '_event_bus_middleware', ['priority' => '-1000']
-            )
-        )->addTag(
-            'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '200']
-        );
-        $container->setDefinition(
-            'bengor_user.simple_bus_bridge_bundle.' . $user . '_event_bus.handles_recorded_messages_middleware',
-            (new Definition(HandlesRecordedMessagesMiddleware::class))->addTag(
-                'bengor_user_' . $user . '_event_bus_middleware', ['priority' => '-1000']
-            )
-        )->addTag(
-            'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '200']
+            'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '0']
         );
 
         return $container;
