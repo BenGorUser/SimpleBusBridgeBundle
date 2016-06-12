@@ -12,4 +12,11 @@ services:
         public: false
         tags:
             - { name: event_recorder }
-            - { name: doctrine.event_subscriber } # tag will be added by DoctrineOrmBridgeExtension
+            - { name: doctrine.event_subscriber }
+
+    bengor_user.simple_bus_bridge_bundle.doctrine_orm_transactional_middleware:
+        class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
+        public: false
+        arguments:
+            - '@doctrine'
+            - 'default'

@@ -14,7 +14,7 @@ namespace BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler;
 
 use BenGorUser\SimpleBusBridge\CommandBus\SimpleBusUserCommandBus;
 use BenGorUser\SimpleBusBridge\EventBus\SimpleBusUserEventBus;
-use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusBridgeExtension;
+use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusTaggerExtension;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use SimpleBus\Message\CallableResolver\CallableCollection;
 use SimpleBus\Message\CallableResolver\CallableMap;
@@ -50,7 +50,13 @@ class SimpleBusPass implements CompilerPassInterface
         $config = $container->getParameter('bengor_user.config');
 
         foreach ($config['user_class'] as $key => $user) {
-            $container = SimpleBusBridgeExtension::addMiddlewareTags($container, $key);
+            $bundles = $container->getParameter('kernel.bundles');
+            foreach ($bundles as $bundle) {
+                $extension = (new $bundle())->getContainerExtension();
+                if ($extension instanceof SimpleBusTaggerExtension) {
+                    $container = $extension->addMiddlewareTags($container, $key);
+                }
+            }
             $this->commandBus($container, $key);
             $this->eventBus($container, $key);
         }

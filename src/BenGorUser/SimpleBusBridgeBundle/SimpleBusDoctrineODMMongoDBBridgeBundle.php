@@ -12,19 +12,16 @@
 
 namespace BenGorUser\SimpleBusBridgeBundle;
 
-use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler\SimpleBusPass;
 use BenGorUser\UserBundle\DependentBenGorUserBundle;
-use BenGorUser\UserBundle\LoadableBundle;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Simple bus bridge bundle kernel class.
+ * Simple bus and Doctrine ODM MongoDB bridge bundle kernel class.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class SimpleBusBridgeBundle extends Bundle implements LoadableBundle
+class SimpleBusDoctrineODMMongoDBBridgeBundle extends Bundle
 {
     use DependentBenGorUserBundle;
 
@@ -33,14 +30,8 @@ class SimpleBusBridgeBundle extends Bundle implements LoadableBundle
      */
     public function build(ContainerBuilder $container)
     {
-        $this->checkDependencies(['BenGorUserBundle'], $container);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new SimpleBusPass(), PassConfig::TYPE_OPTIMIZE);
+        $this->checkDependencies([
+            'BenGorUserBundle', 'DoctrineODMMongoDBBridgeBundle', 'DoctrineMongoDBBundle',
+        ], $container);
     }
 }
