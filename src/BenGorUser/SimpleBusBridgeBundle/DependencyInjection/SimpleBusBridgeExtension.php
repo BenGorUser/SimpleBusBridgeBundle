@@ -28,7 +28,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class SimpleBusBridgeExtension extends Extension implements PrependExtensionInterface
+class SimpleBusBridgeExtension extends Extension implements PrependExtensionInterface, SimpleBusTaggerExtension
 {
     /**
      * {@inheritdoc}
@@ -38,7 +38,6 @@ class SimpleBusBridgeExtension extends Extension implements PrependExtensionInte
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('middlewares.yml');
-        $loader->load('event_recorders.yml');
     }
 
     /**
@@ -54,14 +53,9 @@ class SimpleBusBridgeExtension extends Extension implements PrependExtensionInte
     }
 
     /**
-     * Adds tags to Simple bus middlewares.
-     *
-     * @param ContainerBuilder $container The container
-     * @param string           $user      The user name
-     *
-     * @return ContainerBuilder
+     * {@inheritdoc}
      */
-    public static function addMiddlewareTags(ContainerBuilder $container, $user)
+    public function addMiddlewareTags(ContainerBuilder $container, $user)
     {
         // Related with Command Bus
         $container->setDefinition(
@@ -74,11 +68,6 @@ class SimpleBusBridgeExtension extends Extension implements PrependExtensionInte
             'bengor_user.simple_bus_bridge_bundle.finishes_command_before_handling_next_middleware'
         )->addTag(
             'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '1000']
-        );
-        $container->getDefinition(
-            'bengor_user.simple_bus_bridge_bundle.doctrine_transactional_middleware'
-        )->addTag(
-            'bengor_user_' . $user . '_command_bus_middleware', ['priority' => '0']
         );
 
         // Related with Event Bus

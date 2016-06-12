@@ -14,17 +14,17 @@ namespace BenGorUser\SimpleBusBridgeBundle\EventListener;
 
 use BenGorUser\User\Domain\Model\UserAggregateRoot;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Events;
+use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
+use Doctrine\ODM\MongoDB\Events;
 use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 
 /**
- * Event listener that joins Doctrine ORM transaction with domain events.
+ * Event listener that joins Doctrine ODM MongoDB transaction with domain events.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>
  */
-class CollectsEventsFromEntities implements EventSubscriber, ContainsRecordedMessages
+class CollectsEventsFromDocuments implements EventSubscriber, ContainsRecordedMessages
 {
     /**
      * Domain events collection.
@@ -52,7 +52,7 @@ class CollectsEventsFromEntities implements EventSubscriber, ContainsRecordedMes
      */
     public function postPersist(LifecycleEventArgs $event)
     {
-        $this->collectEventsFromEntity($event);
+        $this->collectEventsFromDocument($event);
     }
 
     /**
@@ -62,7 +62,7 @@ class CollectsEventsFromEntities implements EventSubscriber, ContainsRecordedMes
      */
     public function postUpdate(LifecycleEventArgs $event)
     {
-        $this->collectEventsFromEntity($event);
+        $this->collectEventsFromDocument($event);
     }
 
     /**
@@ -72,7 +72,7 @@ class CollectsEventsFromEntities implements EventSubscriber, ContainsRecordedMes
      */
     public function postRemove(LifecycleEventArgs $event)
     {
-        $this->collectEventsFromEntity($event);
+        $this->collectEventsFromDocument($event);
     }
 
     /**
@@ -95,11 +95,11 @@ class CollectsEventsFromEntities implements EventSubscriber, ContainsRecordedMes
 
     /**
      * Gets the domain events from the aggregate root and loads
-     * inside collected events collection, removing from the entity.
+     * inside collected events collection, removing from the document.
      *
      * @param LifecycleEventArgs $event The Doctrine event
      */
-    private function collectEventsFromEntity(LifecycleEventArgs $event)
+    private function collectEventsFromDocument(LifecycleEventArgs $event)
     {
         $entity = $event->getEntity();
 
