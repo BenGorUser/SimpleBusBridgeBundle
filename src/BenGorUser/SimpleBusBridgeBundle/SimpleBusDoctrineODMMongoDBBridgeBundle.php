@@ -12,10 +12,7 @@
 
 namespace BenGorUser\SimpleBusBridgeBundle;
 
-use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler\SimpleBusPass;
 use BenGorUser\UserBundle\DependentBenGorUserBundle;
-use BenGorUser\UserBundle\LoadableBundle;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -24,7 +21,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class SimpleBusDoctrineODMMongoDBMBridgeBundle extends Bundle
+class SimpleBusDoctrineODMMongoDBBridgeBundle extends Bundle
 {
     use DependentBenGorUserBundle;
 
@@ -34,7 +31,7 @@ class SimpleBusDoctrineODMMongoDBMBridgeBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $this->checkDependencies([
-            'BenGorUserBundle','DoctrineODMMongoDBBridgeBundle', 'DoctrineMongoDBBundle',
+            'BenGorUserBundle', 'DoctrineODMMongoDBBridgeBundle', 'DoctrineMongoDBBundle',
         ], $container);
     }
 }

@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\Events;
 use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 
 /**
- * Event listener that joins Doctrine transaction with domain events.
+ * Event listener that joins Doctrine ODM MongoDB transaction with domain events.
  *
  * @author Beñat Espiña <benatespina@gmail.com>
  * @author Gorka Laucirica <gorka.lauzirika@gmail.com>

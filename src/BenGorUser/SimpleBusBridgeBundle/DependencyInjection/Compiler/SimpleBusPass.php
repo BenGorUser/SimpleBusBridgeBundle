@@ -14,7 +14,6 @@ namespace BenGorUser\SimpleBusBridgeBundle\DependencyInjection\Compiler;
 
 use BenGorUser\SimpleBusBridge\CommandBus\SimpleBusUserCommandBus;
 use BenGorUser\SimpleBusBridge\EventBus\SimpleBusUserEventBus;
-use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusBridgeExtension;
 use BenGorUser\SimpleBusBridgeBundle\DependencyInjection\SimpleBusTaggerExtension;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use SimpleBus\Message\CallableResolver\CallableCollection;

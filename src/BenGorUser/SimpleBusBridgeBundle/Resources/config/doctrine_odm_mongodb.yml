@@ -15,7 +15,7 @@ services:
             - { name: doctrine_mongodb.odm.event_subscriber }
 
     bengor_user.simple_bus_bridge_bundle.doctrine_odm_mongodb_transactional_middleware:
-        class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
+        class: BenGorUser\SimpleBusBridgeBundle\MessageBus\Doctrine\ODM\MongoDB\WrapsMessageHandlingInTransaction
         public: false
         arguments:
             - '@doctrine_mongodb'
