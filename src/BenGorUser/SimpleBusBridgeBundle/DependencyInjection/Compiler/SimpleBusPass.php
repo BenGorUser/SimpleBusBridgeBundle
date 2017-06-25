@@ -58,6 +58,7 @@ class SimpleBusPass implements CompilerPassInterface
                 }
             }
             $this->commandBus($container, $key);
+            $this->commandBus($container, $key, true);
             $this->eventBus($container, $key);
         }
     }
@@ -68,11 +69,12 @@ class SimpleBusPass implements CompilerPassInterface
      * @param ContainerBuilder $container The container builder
      * @param string           $user      The user name
      */
-    private function commandBus(ContainerBuilder $container, $user)
+    private function commandBus(ContainerBuilder $container, $user, $isApi = false)
     {
-        $busId = 'bengor.user.simple_bus_' . $user . '_command_bus';
+        $apiPartName = $isApi ? '_api' : '';
+        $busId = 'bengor.user.simple_bus_' . $user . $apiPartName . '_command_bus';
         $middlewareTag = 'bengor_user_' . $user . '_command_bus_middleware';
-        $handlerTag = 'bengor_user_' . $user . '_command_bus_handler';
+        $handlerTag = 'bengor_user_' . $user . $apiPartName . '_command_bus_handler';
 
         // Define the command bus for the given user type
         // The middleware tag string will be later used to add
@@ -161,8 +163,10 @@ class SimpleBusPass implements CompilerPassInterface
         ))->process($container);
 
         // Decorate SimpleBus' command bus with BenGorUser's command bus
+
+        $apiPartName = $isApi ? '.api_' : '.';
         $container->setDefinition(
-            'bengor_user.' . $user . '.command_bus',
+            'bengor_user.' . $user . $apiPartName . 'command_bus',
             new Definition(
                 SimpleBusUserCommandBus::class, [
                     $container->getDefinition($busId),
