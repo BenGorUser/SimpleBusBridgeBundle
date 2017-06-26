@@ -68,6 +68,7 @@ class SimpleBusPass implements CompilerPassInterface
      *
      * @param ContainerBuilder $container The container builder
      * @param string           $user      The user name
+     * @param bool             $isApi     Flag that tells if it is api version or not
      */
     private function commandBus(ContainerBuilder $container, $user, $isApi = false)
     {
